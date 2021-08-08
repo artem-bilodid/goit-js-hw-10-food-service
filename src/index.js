@@ -35,12 +35,18 @@ themeToggleEl.addEventListener('change', onToggleChange);
 const setPreviousThemeOrDefault = () => {
   try {
     const prevThemeValue = localStorage.getItem(THEME_KEY);
-    bodyEl.classList.add(prevThemeValue);
+
+    if (prevThemeValue) {
+      bodyEl.classList.add(prevThemeValue);
+    } else {
+      bodyEl.classList.add(Theme.LIGHT);
+    }
 
     if (prevThemeValue === Theme.DARK) {
       themeToggleEl.checked = true;
     }
-  } catch {
+  } catch (err) {
+    console.log('Cannot retreive Theme from Local Storage due to an error.', err);
     bodyEl.classList.add(Theme.LIGHT);
   }
 };
